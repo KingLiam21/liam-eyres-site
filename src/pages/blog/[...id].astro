@@ -16,6 +16,10 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await render(post);
 
+const body = post.body || '';
+const wordCount = body.split(/\s+/).filter(Boolean).length;
+const readingTime = Math.max(1, Math.ceil(wordCount / 230));
+
 function formatDate(date: Date): string {
   return date.toLocaleDateString('en-GB', {
     day: 'numeric',
@@ -39,6 +43,7 @@ function formatDate(date: Date): string {
         <a href="/blog" class="back-link">← Back to Blog</a>
         <div class="post-meta">
           <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+          <span class="post-reading-time">{readingTime} min read</span>
           {post.data.tags?.map((tag) => (
             <span class="post-tag">{tag}</span>
           ))}
@@ -57,6 +62,7 @@ function formatDate(date: Date): string {
             src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"
             alt="Liam Eyres"
             class="author-avatar"
+            loading="lazy"
           />
           <div>
             <span class="author-name">Liam Eyres</span>
@@ -105,6 +111,12 @@ function formatDate(date: Date): string {
   .post-meta time {
     font-size: 0.85rem;
     color: var(--color-gray-300);
+  }
+
+  .post-reading-time {
+    font-size: 0.8rem;
+    color: var(--color-gray-300);
+    opacity: 0.8;
   }
 
   .post-tag {
