@@ -1,10 +1,10 @@
 ---
 // Sales Section — the dominant section, metrics + timeline + strengths
 const stats = [
-  { value: '£1.16M', label: 'Revenue Delivered at Rightmove', prefix: '' },
-  { value: '12+', label: 'Years in Sales', prefix: '' },
-  { value: '#1', label: 'Salesperson 3 Years Running', prefix: '' },
-  { value: '40%', label: 'YoY Growth at Honda', prefix: '' },
+  { value: '£1.16M', label: 'Revenue Delivered at Rightmove', numericValue: 1.16, prefix: '£', suffix: 'M', decimals: 2 },
+  { value: '12+', label: 'Years in Sales', numericValue: 12, prefix: '', suffix: '+', decimals: 0 },
+  { value: '#1', label: 'Salesperson 3 Years Running', numericValue: 1, prefix: '#', suffix: '', decimals: 0 },
+  { value: '40%', label: 'YoY Growth at Honda', numericValue: 40, prefix: '', suffix: '%', decimals: 0 },
 ];
 
 const timeline = [
@@ -98,9 +98,20 @@ const strengths = [
 
     <div class="stats-grid reveal">
       {stats.map((stat) => (
-        <div class="stat-card">
-          <span class="stat-value" data-value={stat.value}>{stat.value}</span>
-          <span class="stat-label">{stat.label}</span>
+        <div class="stat-card-wrapper">
+          <div
+            class="stat-card"
+            data-numeric={stat.numericValue}
+            data-prefix={stat.prefix}
+            data-suffix={stat.suffix}
+            data-decimals={stat.decimals}
+          >
+            <div class="stat-card-inner">
+              <div class="stat-glow"></div>
+              <span class="stat-value">0</span>
+              <span class="stat-label">{stat.label}</span>
+            </div>
+          </div>
         </div>
       ))}
     </div>
@@ -161,18 +172,33 @@ const strengths = [
     margin-bottom: 60px;
   }
 
-  .stat-card {
-    background: var(--color-bg-card);
-    border: 1px solid var(--color-gray-500);
-    border-radius: var(--border-radius);
-    padding: 36px 24px;
-    text-align: center;
-    transition: all var(--transition-fast);
-    position: relative;
-    overflow: hidden;
+  .stat-card-wrapper {
+    perspective: 800px;
   }
 
-  .stat-card::before {
+  .stat-card {
+    position: relative;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    transform-style: preserve-3d;
+    will-change: transform;
+  }
+
+  .stat-card-inner {
+    position: relative;
+    padding: 40px 24px;
+    text-align: center;
+    background: rgba(22, 22, 22, 0.6);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(123, 47, 190, 0.15);
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .stat-card-inner::before {
     content: '';
     position: absolute;
     top: 0;
@@ -181,15 +207,40 @@ const strengths = [
     height: 3px;
     background: linear-gradient(90deg, var(--color-purple), var(--color-gold));
     opacity: 0;
-    transition: opacity var(--transition-fast);
+    transition: opacity 0.3s ease;
+  }
+
+  .stat-card:hover .stat-card-inner::before {
+    opacity: 1;
   }
 
   .stat-card:hover {
-    border-color: var(--color-purple);
-    transform: translateY(-4px);
+    box-shadow:
+      0 0 30px rgba(123, 47, 190, 0.3),
+      0 0 60px rgba(123, 47, 190, 0.15),
+      0 20px 40px rgba(0, 0, 0, 0.4);
   }
 
-  .stat-card:hover::before {
+  .stat-card:hover .stat-card-inner {
+    border-color: rgba(123, 47, 190, 0.5);
+    background: rgba(22, 22, 22, 0.8);
+  }
+
+  .stat-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 120px;
+    height: 120px;
+    background: radial-gradient(circle, var(--color-purple-glow) 0%, transparent 70%);
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    transition: opacity 0.4s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .stat-card:hover .stat-glow {
     opacity: 1;
   }
 
@@ -199,12 +250,17 @@ const strengths = [
     font-weight: 800;
     color: var(--color-gold);
     margin-bottom: 8px;
+    position: relative;
+    z-index: 1;
+    font-variant-numeric: tabular-nums;
   }
 
   .stat-label {
     font-size: 0.85rem;
     color: var(--color-gray-200);
     font-weight: 500;
+    position: relative;
+    z-index: 1;
   }
 
   /* Strengths */
@@ -405,3 +461,92 @@ const strengths = [
     }
   }
 </style>
+
+<script>
+  // ── Count-Up Animation (loops every 10 seconds) ──
+  function animateCountUp(el: HTMLElement) {
+    const target = parseFloat(el.closest('.stat-card')?.getAttribute('data-numeric') || '0');
+    const prefix = el.closest('.stat-card')?.getAttribute('data-prefix') || '';
+    const suffix = el.closest('.stat-card')?.getAttribute('data-suffix') || '';
+    const decimals = parseInt(el.closest('.stat-card')?.getAttribute('data-decimals') || '0');
+    const duration = 2000;
+    const startTime = performance.now();
+
+    function update(now: number) {
+      const elapsed = now - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = eased * target;
+
+      el.textContent = prefix + current.toFixed(decimals) + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  function startCountLoop() {
+    const statValues = document.querySelectorAll('.stat-value');
+    // Initial run
+    statValues.forEach((el) => animateCountUp(el as HTMLElement));
+    // Repeat every 10 seconds
+    setInterval(() => {
+      statValues.forEach((el) => animateCountUp(el as HTMLElement));
+    }, 10000);
+  }
+
+  // Trigger count-up when stats section enters viewport
+  const statsGrid = document.querySelector('.stats-grid');
+  let countStarted = false;
+
+  const statsObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting && !countStarted) {
+        countStarted = true;
+        startCountLoop();
+      }
+    });
+  }, { threshold: 0.3 });
+
+  if (statsGrid) statsObserver.observe(statsGrid);
+
+  // ── 3D Tilt Effect on Stat Cards ──
+  const cards = document.querySelectorAll('.stat-card');
+
+  cards.forEach((card) => {
+    const el = card as HTMLElement;
+
+    el.addEventListener('mousemove', (e: MouseEvent) => {
+      const rect = el.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -12;
+      const rotateY = ((x - centerX) / centerX) * 12;
+
+      el.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(10px)`;
+
+      // Move the glow to follow cursor
+      const glow = el.querySelector('.stat-glow') as HTMLElement;
+      if (glow) {
+        glow.style.left = `${x}px`;
+        glow.style.top = `${y}px`;
+      }
+    });
+
+    el.addEventListener('mouseleave', () => {
+      el.style.transform = 'rotateX(0deg) rotateY(0deg) translateZ(0px)';
+      el.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+
+    el.addEventListener('mouseenter', () => {
+      el.style.transition = 'transform 0.1s ease, box-shadow 0.4s ease';
+    });
+  });
+</script>
