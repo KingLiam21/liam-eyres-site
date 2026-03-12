@@ -1,0 +1,176 @@
+---
+// Hero Section — full-viewport cinematic video background
+---
+
+<section class="hero" id="hero">
+  <div class="hero-video-wrapper">
+    <video
+      class="hero-video"
+      autoplay
+      muted
+      loop
+      playsinline
+      poster="/images/hero-poster.jpg"
+    >
+      <source src="/videos/hero-reel.mp4" type="video/mp4" />
+    </video>
+    <div class="hero-overlay"></div>
+  </div>
+
+  <div class="hero-content container">
+    <div class="hero-text">
+      <h1 class="hero-headline">
+        I build sales teams that break records.
+        <span class="hero-headline-accent">I also build websites.</span>
+      </h1>
+      <p class="hero-subtitle">
+        Sales leader · Web developer · Aerial filmmaker — Liverpool, UK
+      </p>
+      <div class="hero-actions">
+        <button class="btn-primary" data-contact>Contact Me</button>
+        <a href="/Liam-Eyres-CV.pdf" class="btn-secondary" target="_blank" rel="noopener">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Download CV
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+  }
+
+  .hero-video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .hero-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      to bottom,
+      rgba(10, 10, 10, 0.5) 0%,
+      rgba(10, 10, 10, 0.7) 50%,
+      rgba(10, 10, 10, 0.95) 100%
+    );
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    padding-top: 120px;
+    padding-bottom: 60px;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .hero-text {
+    max-width: 800px;
+  }
+
+  .hero-headline {
+    color: var(--color-white);
+    margin-bottom: 24px;
+    font-weight: 800;
+  }
+
+  .hero-headline-accent {
+    display: block;
+    color: var(--color-gold);
+    font-size: 0.85em;
+    margin-top: 8px;
+  }
+
+  .hero-subtitle {
+    font-size: 1.25rem;
+    color: var(--color-gray-200);
+    margin-bottom: 40px;
+    font-weight: 400;
+    letter-spacing: 0.5px;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .hero-scroll-indicator {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: var(--color-gray-300);
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--color-purple), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+    50% { opacity: 1; transform: scaleY(1); }
+  }
+
+  @media (max-width: 768px) {
+    .hero-content {
+      padding-top: 100px;
+    }
+
+    .hero-subtitle {
+      font-size: 1.05rem;
+    }
+
+    .hero-actions {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-scroll-indicator {
+      display: none;
+    }
+  }
+</style>

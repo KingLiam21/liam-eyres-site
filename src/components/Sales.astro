@@ -1,0 +1,407 @@
+---
+// Sales Section — the dominant section, metrics + timeline + strengths
+const stats = [
+  { value: '£1.16M', label: 'Revenue Delivered at Rightmove', prefix: '' },
+  { value: '12+', label: 'Years in Sales', prefix: '' },
+  { value: '#1', label: 'Salesperson 3 Years Running', prefix: '' },
+  { value: '40%', label: 'YoY Growth at Honda', prefix: '' },
+];
+
+const timeline = [
+  {
+    company: 'Home.co.uk / Homemove.com',
+    role: 'Sales Manager / Sales Director',
+    period: 'Dec 2025 – Present',
+    highlights: [
+      'Built the sales function from the ground up — team, process, culture.',
+      'Collaborated with founders to define the product proposition (Founder 250), a B2B lead generation package.',
+      'Designed the full sales process: outreach strategy, qualification framework, objection handling, and closing methodology.',
+      'Created sales playbooks, scripts, and enablement materials for scalability beyond personal involvement.',
+    ],
+  },
+  {
+    company: 'Rightmove',
+    role: 'Remote B2B Account Manager',
+    period: 'Jan 2023 – Feb 2025',
+    highlights: [
+      'Delivered £1.164 million in revenue against an annual target of £144,000.',
+      'Awarded "Best Overall Sales Professional" for consistently dominating the national sales team.',
+      'Pioneered AI integration into mailbox workflows, reducing meeting no-shows by 20%.',
+    ],
+  },
+  {
+    company: 'Audi UK (Liverpool)',
+    role: 'Senior Sales Executive',
+    period: 'Sep 2019 – Jan 2023',
+    highlights: [
+      'Ranked top 3 in the national Audi UK performance league for 9 consecutive months.',
+      'Delivered an average £890 profit-per-unit against a £350 target.',
+      'Selected for the Audi UK leadership development programme.',
+    ],
+  },
+  {
+    company: "Johnson's Toyota",
+    role: 'Business Manager',
+    period: 'Apr 2018 – Sep 2019',
+    highlights: [
+      'Increased team profit-per-unit by 32% and boosted PCP product adoption by 15%.',
+    ],
+  },
+  {
+    company: 'Volkswagen (Warrington)',
+    role: 'Sales Executive',
+    period: 'Apr 2016 – Mar 2018',
+    highlights: [
+      'Exceeded monthly sales targets by 20%+. Awarded Sales Performance of the Year.',
+    ],
+  },
+  {
+    company: 'Northwest Honda',
+    role: 'Sales Manager',
+    period: 'Jan 2015 – Mar 2016',
+    highlights: [
+      'Drove 40% year-on-year sales growth and a 21% improvement in team PPU.',
+    ],
+  },
+  {
+    company: 'Millennium Motorcycles (KJM Group)',
+    role: 'Sales Executive',
+    period: 'Nov 2012 – Jan 2015',
+    highlights: [
+      'Number one salesperson for all 3 years and top performer across the wider KJM Group, outselling the next best by 20%.',
+    ],
+  },
+];
+
+const strengths = [
+  'Sales Team Building',
+  'Process Design',
+  'AI-Driven Sales Automation',
+  'SPIN / Challenger / Nudge',
+  'CRM & Pipeline Management',
+  'Coaching & Enablement',
+  'Channel Strategy',
+  'Strategic Negotiation',
+  'Product-Market Fit',
+  'Go-To-Market Strategy',
+];
+---
+
+<section class="sales" id="sales">
+  <div class="container">
+    <!-- Stats -->
+    <div class="sales-header reveal">
+      <span class="section-label">What I Do Best</span>
+      <h2 class="section-title">Sales Leadership</h2>
+      <p class="section-subtitle">Over 12 years of building high-performing sales teams, smashing targets, and installing systems that scale.</p>
+    </div>
+
+    <div class="stats-grid reveal">
+      {stats.map((stat) => (
+        <div class="stat-card">
+          <span class="stat-value" data-value={stat.value}>{stat.value}</span>
+          <span class="stat-label">{stat.label}</span>
+        </div>
+      ))}
+    </div>
+
+    <!-- Strengths -->
+    <div class="strengths reveal">
+      {strengths.map((s) => (
+        <span class="strength-pill">{s}</span>
+      ))}
+    </div>
+
+    <!-- Timeline -->
+    <div class="timeline">
+      {timeline.map((item, i) => (
+        <div class={`timeline-item reveal ${i % 2 === 0 ? 'reveal-left' : 'reveal-right'}`}>
+          <div class="timeline-dot"></div>
+          <div class="timeline-content">
+            <span class="timeline-period">{item.period}</span>
+            <h4 class="timeline-company">{item.company}</h4>
+            <span class="timeline-role">{item.role}</span>
+            <ul class="timeline-highlights">
+              {item.highlights.map((h) => (
+                <li>{h}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      ))}
+      <div class="timeline-line"></div>
+    </div>
+
+    <div class="sales-cta reveal">
+      <button class="btn-primary" data-contact>Contact Me</button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .sales {
+    padding: var(--section-padding);
+    position: relative;
+  }
+
+  .sales-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .sales-header .section-subtitle {
+    margin: 0 auto;
+  }
+
+  /* Stats Grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    margin-bottom: 60px;
+  }
+
+  .stat-card {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-gray-500);
+    border-radius: var(--border-radius);
+    padding: 36px 24px;
+    text-align: center;
+    transition: all var(--transition-fast);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-purple), var(--color-gold));
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .stat-card:hover {
+    border-color: var(--color-purple);
+    transform: translateY(-4px);
+  }
+
+  .stat-card:hover::before {
+    opacity: 1;
+  }
+
+  .stat-value {
+    display: block;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 800;
+    color: var(--color-gold);
+    margin-bottom: 8px;
+  }
+
+  .stat-label {
+    font-size: 0.85rem;
+    color: var(--color-gray-200);
+    font-weight: 500;
+  }
+
+  /* Strengths */
+  .strengths {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+    margin-bottom: 80px;
+  }
+
+  .strength-pill {
+    padding: 10px 20px;
+    background: rgba(123, 47, 190, 0.15);
+    border: 1px solid rgba(123, 47, 190, 0.3);
+    border-radius: 50px;
+    font-size: 0.85rem;
+    font-weight: 500;
+    color: var(--color-purple-light);
+    transition: all var(--transition-fast);
+    white-space: nowrap;
+  }
+
+  .strength-pill:hover {
+    background: rgba(123, 47, 190, 0.3);
+    border-color: var(--color-purple);
+    transform: translateY(-2px);
+  }
+
+  /* Timeline */
+  .timeline {
+    position: relative;
+    max-width: 800px;
+    margin: 0 auto 60px;
+    padding: 0 20px;
+  }
+
+  .timeline-line {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: linear-gradient(to bottom, var(--color-purple), var(--color-gold), var(--color-purple));
+    transform: translateX(-50%);
+  }
+
+  .timeline-item {
+    position: relative;
+    padding: 0 0 48px;
+    display: flex;
+    width: 50%;
+  }
+
+  .timeline-item:nth-child(odd) {
+    padding-right: 40px;
+    text-align: right;
+    align-self: flex-start;
+  }
+
+  .timeline-item:nth-child(even) {
+    padding-left: 40px;
+    margin-left: 50%;
+  }
+
+  .timeline-dot {
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    background: var(--color-gold);
+    border: 3px solid var(--color-bg);
+    border-radius: 50%;
+    z-index: 2;
+    box-shadow: 0 0 20px var(--color-purple-glow);
+  }
+
+  .timeline-item:nth-child(odd) .timeline-dot {
+    right: -7px;
+  }
+
+  .timeline-item:nth-child(even) .timeline-dot {
+    left: -7px;
+  }
+
+  .timeline-content {
+    background: var(--color-bg-card);
+    border: 1px solid var(--color-gray-500);
+    border-radius: var(--border-radius-sm);
+    padding: 24px;
+    width: 100%;
+    transition: border-color var(--transition-fast);
+  }
+
+  .timeline-content:hover {
+    border-color: var(--color-purple);
+  }
+
+  .timeline-period {
+    font-size: 0.8rem;
+    color: var(--color-purple-light);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .timeline-company {
+    color: var(--color-gold);
+    font-size: 1.2rem;
+    margin: 8px 0 4px;
+  }
+
+  .timeline-role {
+    font-size: 0.9rem;
+    color: var(--color-gray-200);
+    font-style: italic;
+    display: block;
+    margin-bottom: 12px;
+  }
+
+  .timeline-highlights {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .timeline-highlights li {
+    font-size: 0.85rem;
+    color: var(--color-gray-100);
+    line-height: 1.5;
+    position: relative;
+    padding-left: 16px;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-highlights li {
+    padding-left: 0;
+    padding-right: 16px;
+  }
+
+  .timeline-highlights li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--color-purple-light);
+    font-size: 0.8rem;
+  }
+
+  .timeline-item:nth-child(odd) .timeline-highlights li::before {
+    left: auto;
+    right: 0;
+    content: '←';
+  }
+
+  .sales-cta {
+    text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .timeline-line {
+      left: 20px;
+    }
+
+    .timeline-item,
+    .timeline-item:nth-child(odd),
+    .timeline-item:nth-child(even) {
+      width: 100%;
+      padding-left: 50px;
+      padding-right: 0;
+      margin-left: 0;
+      text-align: left;
+    }
+
+    .timeline-dot,
+    .timeline-item:nth-child(odd) .timeline-dot,
+    .timeline-item:nth-child(even) .timeline-dot {
+      left: 13px;
+      right: auto;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-highlights li {
+      padding-left: 16px;
+      padding-right: 0;
+    }
+
+    .timeline-item:nth-child(odd) .timeline-highlights li::before {
+      left: 0;
+      right: auto;
+      content: '→';
+    }
+  }
+
+  @media (max-width: 480px) {
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

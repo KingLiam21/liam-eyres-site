@@ -1,0 +1,97 @@
+---
+// Asia Interlude — cinematic break between sales and creative sections
+---
+
+<section class="asia" id="asia">
+  <div class="asia-image-wrapper">
+    <img
+      src="https://images.unsplash.com/photo-1528181304800-259b08848526?w=1920&q=80"
+      alt="Aerial view of Southeast Asia coastline"
+      class="asia-image"
+      loading="lazy"
+    />
+    <div class="asia-overlay"></div>
+  </div>
+
+  <div class="asia-content container reveal">
+    <span class="section-label">2024 — 12 Months Across Asia</span>
+    <h3 class="asia-headline">
+      Some things are worth pressing pause for.
+    </h3>
+    <p class="asia-text">
+      Took a planned career break to travel across Asia with my fiancée, who has a degenerative memory condition. 
+      Built a video archive preserving our shared experiences for the future. Returned with a drone pilot's eye, 
+      a hard drive full of cinematic footage, and renewed clarity on what comes next.
+    </p>
+  </div>
+</section>
+
+<style>
+  .asia {
+    position: relative;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .asia-image-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .asia-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 40%;
+  }
+
+  .asia-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      135deg,
+      rgba(10, 10, 10, 0.85) 0%,
+      rgba(10, 10, 10, 0.6) 50%,
+      rgba(123, 47, 190, 0.15) 100%
+    );
+  }
+
+  .asia-content {
+    position: relative;
+    z-index: 1;
+    max-width: 650px;
+    padding: 100px 24px;
+  }
+
+  .asia-headline {
+    color: var(--color-gold);
+    font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+    margin-bottom: 20px;
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .asia-text {
+    font-size: 1.1rem;
+    color: var(--color-gray-100);
+    line-height: 1.8;
+  }
+
+  @media (max-width: 768px) {
+    .asia {
+      min-height: 50vh;
+    }
+
+    .asia-content {
+      padding: 80px 24px;
+    }
+  }
+</style>

@@ -1,0 +1,220 @@
+---
+// Aerial / Drone Section
+---
+
+<section class="aerial" id="aerial">
+  <div class="container">
+    <div class="aerial-header reveal">
+      <span class="section-label">From Above</span>
+      <h2 class="section-title">Aerial Filmmaking</h2>
+      <p class="section-subtitle">Cinematic drone footage captured across Asia and beyond.</p>
+    </div>
+
+    <!-- Main Reel -->
+    <div class="reel-wrapper reveal">
+      <div class="reel-frame">
+        <div class="reel-placeholder">
+          <img
+            src="https://images.unsplash.com/photo-1506947411487-a56738267384?w=1200&q=80"
+            alt="Drone aerial view"
+            loading="lazy"
+          />
+          <div class="reel-play-overlay">
+            <button class="play-btn" aria-label="Play reel">
+              <svg width="48" height="48" viewBox="0 0 24 24" fill="var(--color-gold)">
+                <polygon points="5,3 19,12 5,21"></polygon>
+              </svg>
+            </button>
+            <span class="play-label">Watch the Reel</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thumbnail Grid -->
+    <div class="drone-grid">
+      <div class="drone-thumb reveal" style="transition-delay: 0s">
+        <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80" alt="Drone shot 1" loading="lazy" />
+        <div class="thumb-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--color-gold)"><polygon points="5,3 19,12 5,21"></polygon></svg>
+        </div>
+      </div>
+      <div class="drone-thumb reveal" style="transition-delay: 0.1s">
+        <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80" alt="Drone shot 2" loading="lazy" />
+        <div class="thumb-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--color-gold)"><polygon points="5,3 19,12 5,21"></polygon></svg>
+        </div>
+      </div>
+      <div class="drone-thumb reveal" style="transition-delay: 0.2s">
+        <img src="https://images.unsplash.com/photo-1433838552652-f9a46b332c40?w=600&q=80" alt="Drone shot 3" loading="lazy" />
+        <div class="thumb-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--color-gold)"><polygon points="5,3 19,12 5,21"></polygon></svg>
+        </div>
+      </div>
+      <div class="drone-thumb reveal" style="transition-delay: 0.3s">
+        <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?w=600&q=80" alt="Drone shot 4" loading="lazy" />
+        <div class="thumb-overlay">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="var(--color-gold)"><polygon points="5,3 19,12 5,21"></polygon></svg>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .aerial {
+    padding: var(--section-padding);
+  }
+
+  .aerial-header {
+    text-align: center;
+    margin-bottom: 50px;
+  }
+
+  .aerial-header .section-subtitle {
+    margin: 0 auto;
+  }
+
+  /* Main Reel */
+  .reel-wrapper {
+    margin-bottom: 40px;
+  }
+
+  .reel-frame {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    border: 1px solid var(--color-gray-500);
+    transition: border-color var(--transition-fast);
+  }
+
+  .reel-frame:hover {
+    border-color: var(--color-purple);
+  }
+
+  .reel-placeholder {
+    position: relative;
+    aspect-ratio: 21 / 9;
+    cursor: pointer;
+  }
+
+  .reel-placeholder img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .reel-placeholder:hover img {
+    transform: scale(1.03);
+  }
+
+  .reel-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: background var(--transition-fast);
+  }
+
+  .reel-placeholder:hover .reel-play-overlay {
+    background: rgba(10, 10, 10, 0.3);
+  }
+
+  .play-btn {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: rgba(10, 10, 10, 0.6);
+    border: 2px solid var(--color-gold);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    padding-left: 6px;
+  }
+
+  .play-btn:hover {
+    background: var(--color-gold);
+    transform: scale(1.1);
+  }
+
+  .play-btn:hover svg {
+    fill: var(--color-bg);
+  }
+
+  .play-label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--color-white);
+  }
+
+  /* Thumbnail Grid */
+  .drone-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+
+  .drone-thumb {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: var(--border-radius-sm);
+    overflow: hidden;
+    cursor: pointer;
+    border: 1px solid transparent;
+    transition: all var(--transition-fast);
+  }
+
+  .drone-thumb:hover {
+    border-color: var(--color-gold);
+    box-shadow: 0 4px 20px var(--color-purple-glow);
+  }
+
+  .drone-thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-slow);
+  }
+
+  .drone-thumb:hover img {
+    transform: scale(1.1);
+  }
+
+  .thumb-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(10, 10, 10, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+  }
+
+  .drone-thumb:hover .thumb-overlay {
+    opacity: 1;
+  }
+
+  @media (max-width: 768px) {
+    .drone-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .reel-placeholder {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>

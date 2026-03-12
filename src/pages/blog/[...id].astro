@@ -1,0 +1,276 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Navbar from '../../components/Navbar.astro';
+import ContactModal from '../../components/ContactModal.astro';
+import Footer from '../../components/Footer.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  return posts.map((post) => ({
+    params: { id: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+function formatDate(date: Date): string {
+  return date.toLocaleDateString('en-GB', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+---
+
+<BaseLayout
+  title={`${post.data.title} — Liam Eyres`}
+  description={post.data.description}
+  image={`/og/${post.id}.svg`}
+>
+  <Navbar />
+  <ContactModal />
+
+  <main class="blog-post-page">
+    <article class="container">
+      <div class="post-header">
+        <a href="/blog" class="back-link">← Back to Blog</a>
+        <div class="post-meta">
+          <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+          {post.data.tags?.map((tag) => (
+            <span class="post-tag">{tag}</span>
+          ))}
+        </div>
+        <h1 class="post-title">{post.data.title}</h1>
+        <p class="post-description">{post.data.description}</p>
+      </div>
+
+      <div class="post-content">
+        <Content />
+      </div>
+
+      <div class="post-footer">
+        <div class="post-author">
+          <img
+            src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80"
+            alt="Liam Eyres"
+            class="author-avatar"
+          />
+          <div>
+            <span class="author-name">Liam Eyres</span>
+            <span class="author-role">Sales Leader · Web Developer</span>
+          </div>
+        </div>
+        <button class="btn-primary" data-contact>Contact Me</button>
+      </div>
+    </article>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style>
+  .blog-post-page {
+    padding-top: 120px;
+    padding-bottom: 80px;
+  }
+
+  .post-header {
+    max-width: 720px;
+    margin: 0 auto 48px;
+  }
+
+  .back-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    color: var(--color-purple-light);
+    margin-bottom: 32px;
+    transition: color var(--transition-fast);
+  }
+
+  .back-link:hover {
+    color: var(--color-gold);
+  }
+
+  .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+
+  .post-meta time {
+    font-size: 0.85rem;
+    color: var(--color-gray-300);
+  }
+
+  .post-tag {
+    padding: 3px 10px;
+    background: rgba(123, 47, 190, 0.15);
+    border-radius: 20px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: var(--color-purple-light);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .post-title {
+    color: var(--color-gold);
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.15;
+    margin-bottom: 16px;
+  }
+
+  .post-description {
+    font-size: 1.15rem;
+    color: var(--color-gray-200);
+    line-height: 1.6;
+  }
+
+  /* Post Content — Markdown Styling */
+  .post-content {
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .post-content :global(h2) {
+    color: var(--color-white);
+    font-size: 1.6rem;
+    margin: 48px 0 16px;
+    padding-top: 16px;
+    border-top: 1px solid var(--color-gray-500);
+  }
+
+  .post-content :global(h3) {
+    color: var(--color-gold);
+    font-size: 1.2rem;
+    margin: 32px 0 12px;
+  }
+
+  .post-content :global(p) {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: var(--color-gray-100);
+    margin-bottom: 20px;
+  }
+
+  .post-content :global(ul),
+  .post-content :global(ol) {
+    margin-bottom: 20px;
+    padding-left: 24px;
+  }
+
+  .post-content :global(li) {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--color-gray-100);
+    margin-bottom: 8px;
+    list-style: disc;
+  }
+
+  .post-content :global(strong) {
+    color: var(--color-white);
+    font-weight: 600;
+  }
+
+  .post-content :global(em) {
+    color: var(--color-gray-200);
+  }
+
+  .post-content :global(a) {
+    color: var(--color-purple-light);
+    text-decoration: underline;
+    text-decoration-color: rgba(123, 47, 190, 0.4);
+    transition: all var(--transition-fast);
+  }
+
+  .post-content :global(a:hover) {
+    color: var(--color-gold);
+    text-decoration-color: var(--color-gold);
+  }
+
+  .post-content :global(blockquote) {
+    border-left: 3px solid var(--color-purple);
+    padding-left: 20px;
+    margin: 28px 0;
+    font-style: italic;
+    color: var(--color-gray-200);
+  }
+
+  .post-content :global(hr) {
+    border: none;
+    border-top: 1px solid var(--color-gray-500);
+    margin: 40px 0;
+  }
+
+  .post-content :global(code) {
+    background: var(--color-bg-card);
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    color: var(--color-purple-light);
+  }
+
+  .post-content :global(pre) {
+    background: var(--color-bg-card);
+    padding: 20px;
+    border-radius: var(--border-radius-sm);
+    overflow-x: auto;
+    margin-bottom: 20px;
+    border: 1px solid var(--color-gray-500);
+  }
+
+  /* Post Footer */
+  .post-footer {
+    max-width: 720px;
+    margin: 60px auto 0;
+    padding-top: 32px;
+    border-top: 1px solid var(--color-gray-500);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .post-author {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .author-avatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--color-purple);
+  }
+
+  .author-name {
+    display: block;
+    font-weight: 600;
+    color: var(--color-white);
+    font-size: 1rem;
+  }
+
+  .author-role {
+    font-size: 0.8rem;
+    color: var(--color-gray-300);
+  }
+
+  @media (max-width: 768px) {
+    .blog-post-page {
+      padding-top: 100px;
+    }
+
+    .post-footer {
+      justify-content: center;
+      text-align: center;
+    }
+  }
+</style>
