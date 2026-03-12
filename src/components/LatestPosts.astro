@@ -1,10 +1,21 @@
 ---
 // Latest Blog Posts — shows 3 most recent on homepage
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf())
   .slice(0, 3);
+
+// Calculate reading time for each post
+const posts = await Promise.all(
+  allPosts.map(async (post) => {
+    const { remarkPluginFrontmatter } = await render(post);
+    const body = post.body || '';
+    const wordCount = body.split(/\s+/).filter(Boolean).length;
+    const readingTime = Math.max(1, Math.ceil(wordCount / 230));
+    return { ...post, readingTime };
+  })
+);
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString('en-GB', {
@@ -27,6 +38,7 @@ function formatDate(date: Date): string {
         <a href={`/blog/${post.id}`} class={`post-card reveal`} style={`transition-delay: ${i * 0.15}s`}>
           <div class="post-meta">
             <span class="post-date">{formatDate(post.data.date)}</span>
+            <span class="post-reading-time">{post.readingTime} min read</span>
             {post.data.tags && post.data.tags[0] && (
               <span class="post-tag">{post.data.tags[0]}</span>
             )}
@@ -88,6 +100,13 @@ function formatDate(date: Date): string {
     font-size: 0.8rem;
     color: var(--color-gray-300);
     font-weight: 500;
+  }
+
+  .post-reading-time {
+    font-size: 0.75rem;
+    color: var(--color-gray-300);
+    font-weight: 500;
+    opacity: 0.8;
   }
 
   .post-tag {

@@ -50,7 +50,17 @@ const photos = [
         <line x1="6" y1="6" x2="18" y2="18"></line>
       </svg>
     </button>
+    <button class="lightbox-nav lightbox-prev" aria-label="Previous photo">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
     <img class="lightbox-img" id="lightboxImg" src="" alt="" />
+    <button class="lightbox-nav lightbox-next" aria-label="Next photo">
+      <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <polyline points="9 6 15 12 9 18"></polyline>
+      </svg>
+    </button>
   </div>
 </section>
 
@@ -175,6 +185,27 @@ const photos = [
     transform: scale(1);
   }
 
+  .lightbox-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: rgba(255, 255, 255, 0.6);
+    z-index: 10001;
+    padding: 16px;
+    transition: color var(--transition-fast), transform 0.2s ease;
+    background: none;
+    border: none;
+    cursor: pointer;
+  }
+
+  .lightbox-nav:hover {
+    color: var(--color-gold);
+    transform: translateY(-50%) scale(1.15);
+  }
+
+  .lightbox-prev { left: 20px; }
+  .lightbox-next { right: 20px; }
+
   @media (max-width: 768px) {
     .photo-grid {
       grid-template-columns: repeat(2, 1fr);
@@ -197,34 +228,54 @@ const photos = [
 <script>
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg') as HTMLImageElement;
+  const items = Array.from(document.querySelectorAll('[data-lightbox]'));
+  let currentIndex = 0;
+
+  function showImage(index: number) {
+    currentIndex = (index + items.length) % items.length;
+    const src = (items[currentIndex] as HTMLElement).dataset.lightbox || '';
+    if (lightboxImg) lightboxImg.src = src;
+  }
+
+  function openLightbox(index: number) {
+    showImage(index);
+    lightbox?.classList.add('active');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox?.classList.remove('active');
+    document.body.style.overflow = '';
+  }
 
   // Open lightbox
-  document.querySelectorAll('[data-lightbox]').forEach((item) => {
-    item.addEventListener('click', () => {
-      const src = (item as HTMLElement).dataset.lightbox || '';
-      if (lightboxImg) lightboxImg.src = src;
-      lightbox?.classList.add('active');
-      document.body.style.overflow = 'hidden';
-    });
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => openLightbox(i));
   });
 
   // Close lightbox
-  lightbox?.querySelector('.lightbox-close')?.addEventListener('click', () => {
-    lightbox?.classList.remove('active');
-    document.body.style.overflow = '';
-  });
+  lightbox?.querySelector('.lightbox-close')?.addEventListener('click', closeLightbox);
 
   lightbox?.addEventListener('click', (e) => {
-    if (e.target === lightbox) {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    if (e.target === lightbox) closeLightbox();
   });
 
+  // Prev / Next buttons
+  lightbox?.querySelector('.lightbox-prev')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showImage(currentIndex - 1);
+  });
+
+  lightbox?.querySelector('.lightbox-next')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    showImage(currentIndex + 1);
+  });
+
+  // Keyboard navigation
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape' && lightbox?.classList.contains('active')) {
-      lightbox.classList.remove('active');
-      document.body.style.overflow = '';
-    }
+    if (!lightbox?.classList.contains('active')) return;
+    if (e.key === 'Escape') closeLightbox();
+    if (e.key === 'ArrowLeft') showImage(currentIndex - 1);
+    if (e.key === 'ArrowRight') showImage(currentIndex + 1);
   });
 </script>

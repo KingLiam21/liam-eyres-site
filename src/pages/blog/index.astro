@@ -3,10 +3,19 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 import Navbar from '../../components/Navbar.astro';
 import ContactModal from '../../components/ContactModal.astro';
 import Footer from '../../components/Footer.astro';
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 
-const posts = (await getCollection('blog', ({ data }) => !data.draft))
+const allPosts = (await getCollection('blog', ({ data }) => !data.draft))
   .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const posts = await Promise.all(
+  allPosts.map(async (post) => {
+    const body = post.body || '';
+    const wordCount = body.split(/\s+/).filter(Boolean).length;
+    const readingTime = Math.max(1, Math.ceil(wordCount / 230));
+    return { ...post, readingTime };
+  })
+);
 
 function formatDate(date: Date): string {
   return date.toLocaleDateString('en-GB', {
@@ -60,6 +69,7 @@ posts.forEach((post) => {
           >
             <div class="blog-card-meta">
               <time datetime={post.data.date.toISOString()}>{formatDate(post.data.date)}</time>
+              <span class="blog-reading-time">{post.readingTime} min read</span>
               {post.data.tags?.map((tag) => (
                 <span class="blog-tag">{tag}</span>
               ))}
@@ -155,6 +165,12 @@ posts.forEach((post) => {
   .blog-card-meta time {
     font-size: 0.8rem;
     color: var(--color-gray-300);
+  }
+
+  .blog-reading-time {
+    font-size: 0.75rem;
+    color: var(--color-gray-300);
+    opacity: 0.8;
   }
 
   .blog-tag {
