@@ -1,11 +1,32 @@
 ---
-// Web Dev Portfolio — 3 browser-frame mockup cards
+// Web Dev Portfolio — 6 browser-frame mockup cards
 const projects = [
   {
     title: 'Acobas Estate Agents',
     description: 'Full website for Knutsford independent estate agents — property search, valuations, lettings, and investment services across Cheshire.',
     image: '/images/website-acobas.jpg',
     url: 'https://acobas-website.vercel.app',
+    tech: ['Next.js', 'Tailwind', 'Vercel'],
+  },
+  {
+    title: 'Voltix',
+    description: 'SaaS productivity platform with AI task prioritisation, smart scheduling, and 50+ integrations. Replaces scattered tools with one workspace.',
+    image: '/images/website-voltix.jpg',
+    url: 'https://voltix-demo.vercel.app',
+    tech: ['React', 'TypeScript', 'Vercel'],
+  },
+  {
+    title: 'Harbor & Stone',
+    description: 'Boutique hotel website with room comparisons, curated escape packages, and a cinematic coastal brand experience.',
+    image: '/images/website-harborstone.jpg',
+    url: 'https://harbor-stone-demo.vercel.app',
+    tech: ['Astro', 'CSS', 'Vercel'],
+  },
+  {
+    title: 'Northway Studio',
+    description: 'Creative design studio site with case studies, service breakdowns, and founder testimonials. Clean, bold, conversion-focused.',
+    image: '/images/website-northway.jpg',
+    url: 'https://northway-studio-demo.vercel.app',
     tech: ['Next.js', 'Tailwind', 'Vercel'],
   },
   {
@@ -250,8 +271,15 @@ const projects = [
 
   @media (max-width: 1024px) {
     .projects-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 24px;
+    }
+  }
+
+  @media (max-width: 640px) {
+    .projects-grid {
       grid-template-columns: 1fr;
-      max-width: 600px;
+      max-width: 500px;
       margin: 0 auto 60px;
     }
   }
