@@ -2,25 +2,25 @@
 // Web Dev Portfolio — 3 browser-frame mockup cards
 const projects = [
   {
-    title: 'Project One',
-    description: 'A modern web application built with clean design and intuitive user experience.',
-    image: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80',
-    url: '#',
-    tech: ['React', 'Next.js', 'Tailwind'],
+    title: 'Acobas Estate Agents',
+    description: 'Full website for Knutsford independent estate agents — property search, valuations, lettings, and investment services across Cheshire.',
+    image: '/images/website-acobas.jpg',
+    url: 'https://acobas-website.vercel.app',
+    tech: ['Next.js', 'Tailwind', 'Vercel'],
   },
   {
-    title: 'Project Two',
-    description: 'Full-stack platform with authentication, dashboards, and real-time data.',
-    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80',
-    url: '#',
-    tech: ['Astro', 'TypeScript', 'CSS'],
+    title: 'SportsPulse',
+    description: 'Real-time sports news platform covering 33+ sports with live scores, breaking news, and in-depth analysis.',
+    image: '/images/website-sportspulse.jpg',
+    url: 'https://sportspulse-ten.vercel.app',
+    tech: ['React', 'TypeScript', 'Vercel'],
   },
   {
-    title: 'Project Three',
-    description: 'E-commerce solution with seamless checkout flow and analytics integration.',
-    image: 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=800&q=80',
-    url: '#',
-    tech: ['HTML/CSS', 'JavaScript', 'Vercel'],
+    title: 'Dickinson Body & Balance',
+    description: 'Massage & wellness business site with online booking, treatment breakdowns, and a calming brand experience. Based in Brighton.',
+    image: '/images/website-dickinson.jpg',
+    url: 'https://dickinson-body-balance.vercel.app',
+    tech: ['Astro', 'CSS', 'Vercel'],
   },
 ];
 ---
@@ -44,7 +44,7 @@ const projects = [
                 <span class="dot green"></span>
               </div>
               <div class="browser-url">
-                <span>{project.url === '#' ? 'yourproject.vercel.app' : project.url}</span>
+                <span>{new URL(project.url).hostname}</span>
               </div>
             </div>
             <div class="browser-content">
