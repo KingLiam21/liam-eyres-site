@@ -1,0 +1,105 @@
+---
+// CV Download — cinematic CTA section before footer
+---
+
+<section class="cv-section" id="cv">
+  <div class="cv-glow"></div>
+  <div class="container">
+    <div class="cv-inner reveal">
+      <div class="cv-text">
+        <span class="section-label">Want the Full Picture?</span>
+        <h2 class="cv-headline">Download My CV</h2>
+        <p class="cv-description">
+          12+ years of sales leadership, team building, and revenue growth — all on one page.
+        </p>
+      </div>
+      <div class="cv-actions">
+        <a href="/Liam-Eyres-CV.pdf" class="btn-primary cv-btn" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+          Download CV (PDF)
+        </a>
+        <button class="btn-secondary cv-btn" data-contact>
+          Or Just Say Hello →
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cv-section {
+    padding: 100px 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cv-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 600px;
+    height: 600px;
+    background: radial-gradient(circle, rgba(123, 47, 190, 0.08) 0%, rgba(212, 175, 55, 0.04) 40%, transparent 70%);
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .cv-inner {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    max-width: 620px;
+    margin: 0 auto;
+    padding: 60px 40px;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: var(--border-radius);
+  }
+
+  .cv-headline {
+    color: var(--color-white);
+    font-size: clamp(1.8rem, 3vw, 2.4rem);
+    font-weight: 800;
+    margin-bottom: 12px;
+  }
+
+  .cv-description {
+    font-size: 1.05rem;
+    color: var(--color-gray-200);
+    line-height: 1.6;
+    margin-bottom: 36px;
+  }
+
+  .cv-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .cv-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 16px 32px;
+    font-size: 1rem;
+  }
+
+  @media (max-width: 640px) {
+    .cv-inner {
+      padding: 40px 24px;
+    }
+
+    .cv-actions {
+      flex-direction: column;
+      align-items: center;
+    }
+  }
+</style>
