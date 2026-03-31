@@ -1,4 +1,6 @@
 ---
+import SpeedInsights from '@vercel/speed-insights/astro';
+
 export interface Props {
   title?: string;
   description?: string;
@@ -254,5 +256,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site);
         * { cursor: none !important; }
       }
     </style>
+
+    <SpeedInsights />
   </body>
 </html>
